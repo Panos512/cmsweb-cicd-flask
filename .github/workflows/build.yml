@@ -38,7 +38,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: panos512/cmsweb-cicd-flask/cmsweb-cicd-flask
+        repository: ppaparri/cmsweb-cicd-flask/cmsweb-cicd-flask
         tag_with_ref: true
 
     - name: Login to DockerHub
@@ -57,3 +57,10 @@ jobs:
         tags: panos512/cmsweb-cicd-flask:${{steps.get-ref.outputs.tag}}
         build-args: |
           COMMIT=${{ github.sha }}
+
+    - name: Push new image to k8s
+      run: |
+        curl -ksLO https://raw.githubusercontent.com/vkuznet/imagebot/main/imagebot.sh
+        sed -i -e "s,COMMIT,${{github.sha}},g" -e "s,REPOSITORY,${{github.repository}},g" -e "s,flask-app,http,g" -e "s,TAG,${{steps.get-ref.outputs.tag}},g" -e "s,panos512/cmsweb-cicd-flask,cmssw/httpgo,g" -e "s,flask-deployment,httpgo,g" -e "s,HOST,${{secrets.IMAGEBOT_URL}},g" imagebot.sh
+        chmod +x imagebot.sh
+        sh ./imagebot.sh
