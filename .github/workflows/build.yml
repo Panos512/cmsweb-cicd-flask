@@ -32,14 +32,15 @@ jobs:
 
     - name: Check out the repo
       uses: actions/checkout@v2
-    - name: Push to GitHub Packages
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: ppaparri/cmsweb-cicd-flask/cmsweb-cicd-flask
-        tag_with_ref: true
+
+    # - name: Push to GitHub Packages
+    #   uses: docker/build-push-action@v1
+    #   with:
+    #     username: ${{ github.actor }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
+    #     registry: docker.pkg.github.com
+    #     repository: ppaparri/cmsweb-cicd-flask/cmsweb-cicd-flask
+    #     tag_with_ref: true
 
     - name: Login to DockerHub
       uses: docker/login-action@v1
