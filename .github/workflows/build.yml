@@ -62,6 +62,6 @@ jobs:
     - name: Push new image to k8s
       run: |
         curl -ksLO https://raw.githubusercontent.com/vkuznet/imagebot/main/imagebot.sh
-        sed -i -e "s,COMMIT,${{github.sha}},g" -e "s,REPOSITORY,${{github.repository}},g" -e "s,'flask-app',http,g" -e "s,TAG,${{steps.get-ref.outputs.tag}},g" -e "s,panos512/cmsweb-cicd-flask,cmssw/httpgo,g" -e "s,flask-deployment,httpgo,g" -e "s,HOST,${{secrets.IMAGEBOT_URL}},g" imagebot.sh
+        sed -i -e "s,COMMIT,${{github.sha}},g" -e "s,REPOSITORY,${{github.repository}},g" -e "s,testsp,http,g" -e "s,TAG,${{steps.get-ref.outputs.tag}},g" -e "s,panos512/cmsweb-cicd-flask,cmssw/httpgo,g" -e "s,flask-deployment,httpgo,g" -e "s,HOST,${{secrets.IMAGEBOT_URL}},g" imagebot.sh
         chmod +x imagebot.sh
         sh ./imagebot.sh
