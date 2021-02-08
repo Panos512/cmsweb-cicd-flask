@@ -57,7 +57,7 @@ jobs:
         push: true
         tags: panos512/cmsweb-cicd-flask:${{steps.get-ref.outputs.tag}}
         build-args: |
-          COMMIT=${{ github.sha }}
+          RELEASE_TAG=${{ github.ref }}
 
     - name: Push new image to k8s
       run: |
