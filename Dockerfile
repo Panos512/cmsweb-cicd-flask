@@ -1,4 +1,6 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.6-alpine3.7
+ENV LISTEN_PORT 8113
+EXPOSE 8113
 COPY ./app /app
 RUN apk --update add bash nano git
 ENV STATIC_URL /static
