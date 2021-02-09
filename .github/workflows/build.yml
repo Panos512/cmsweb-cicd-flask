@@ -11,7 +11,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-
+    
+    - name: Test with pytest
+      run: |
+        python tests/tests.py
+    
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
