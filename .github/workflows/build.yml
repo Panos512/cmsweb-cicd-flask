@@ -12,6 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         
+
+    - name: Check out the repo
+      uses: actions/checkout@v2
+     
+    - name: Test with pytest
+      run: |
+        python tests/tests.py  
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -22,20 +30,28 @@ jobs:
         release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
- 
+
+    - name: Zip source code
+      run: |
+        zip -r source_code .
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./source_code.zip
+        asset_name: source_code.zip
+        asset_content_type: application/zip
+
     - name: Get the Ref
       id: get-ref
       uses: ankitvgupta/ref-to-tag-action@master
       with:
         ref: ${{ github.ref }}
         head_ref: ${{ github.head_ref }}
-
-    - name: Check out the repo
-      uses: actions/checkout@v2
-   
-    - name: Test with pytest
-      run: |
-        python tests/tests.py
 
     # - name: Push to GitHub Packages
     #   uses: docker/build-push-action@v1
