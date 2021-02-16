@@ -65,6 +65,13 @@ jobs:
         build
         --user
 
+    - name: Find and Replace
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        include: "setup.cfg"
+        find: "version = .*"
+        replace: "version = ${{ steps.get-ref.outputs.tag }}"
+
     - name: Build a binary wheel and a source tarball
       env:
           STACKMANAGER_VERSION: ${{ github.event.release.tag_name }}``
