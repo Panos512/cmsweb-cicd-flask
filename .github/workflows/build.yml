@@ -62,7 +62,7 @@ jobs:
       with:
         path: setup.cfg
         contents: |
-          version:${{steps.get-ref.outputs.tag}}
+          version = ${{steps.get-ref.outputs.tag}}
         write-mode: append
 
     - name: Install pypa/build
