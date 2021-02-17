@@ -65,7 +65,7 @@ jobs:
         build
         --user
 
-    - name: Find and Replace
+    - name: Setup release for pypi
       uses: jacobtomlinson/gha-find-replace@master
       with:
         include: "setup.cfg"
